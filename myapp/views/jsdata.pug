@@ -1,0 +1,47 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/jsdata.css')
+  body
+    h1 Wyprawa na Świnicę dnia #{data.pocz.getFullYear()}-#{data.pocz.getMonth()+1}-#{data.pocz.getDate()}
+    p Pomysłodawcą wycieczki: #{data.imie} #{data.nazwisko}, urodzony #{data.data_ur}
+    p Lista uczestników 
+      br
+      for zmienna in data.przyjaciele
+        = zmienna.imie+" "+zmienna.nazw+", " 
+        br
+    h2 Za pomoca petli for
+    ul
+      for zmienna, i in data.przyjaciele
+        if i % 3 == 0
+          li(class="c0")= zmienna.imie
+        else if i % 3 == 1
+          li(class="c1")= zmienna.imie
+        else 
+          li(class="c2")= zmienna.imie
+    h2 Plan wycieczki
+    ul
+      li rozpoczecie o #{data.pocz.getHours()}:#{data.pocz.getMinutes()}:#{data.pocz.getSeconds()}
+      li koniec o #{data.koniec.getHours()}:#{data.koniec.getMinutes()}:#{data.koniec.getSeconds()}
+      -  hours = data.koniec.getHours() -data.pocz.getHours()
+      -  minutes = "0"+ data.koniec.getMinutes() 
+      -  formatted = hours +":"+minutes.substr(-2)
+
+      li #{hours}
+      li liczba uczestnikow: #{data.przyjaciele.length}
+      script(type='text/javascript').
+          liczba=0
+          for zmienna in data.przyjaciele
+            if zmienna.szczyt == true
+              liczba++
+      li Zdobyło szczyt: #{liczba}
+      li Szczytu nie zdobyli:
+      ol 
+        - 
+        for zm in data.przyjaciele
+          if zm.szczyt == false
+            li= zm.imie+" "+zm.nazw
+
+      
+    
