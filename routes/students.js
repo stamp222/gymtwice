@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-var db = require('./utils/db.js')
 var mongoose = require('mongoose');
 var students = [
  {"id": 0, "imie":"Marek", "nazwisko":"Nowak", "wiek": 23},
@@ -18,19 +17,35 @@ var studentSchema = mongoose.Schema({
   wiek: {type: Number, min: 1, max: 120, default: 25}
 });
 
+var cwiczeniaSchema = mongoose.Schema({
+      name : String,
+      miesnie : [
+          String
+      ],
+      info : {
+          opis : String,
+          link : String
+      },
+      popularnosc : Number,
+      trudnosc : Number,
+      max : Number
+});
+
 studentSchema.methods.speak = function() {
   var greeting = this.imie
     ? "Mew name is " + this.imie
     : "I dont have a name";
     console.log(greeting);
 }
-// var StudentsModel = mongoose.model('students',studentSchema);
-//
-// var janek = new StudentsModel({
-//   imie: "Zygfryd",
-//   nazw: "Kowalski",
-//   wiek: 22
-// });
+var StudentsModel = mongoose.model('students',studentSchema);
+var CwiczeniaModel = mongoose.model('cwiczenia',cwiczeniaSchema);
+
+var janek = new StudentsModel({
+  imie: "Zygfryd",
+  nazw: "Kowalski",
+  wiek: 22
+});
+
 
 db.on('error', console.error.bind(console,'connection error: '));
 db.once('open',function() {
@@ -38,30 +53,43 @@ db.once('open',function() {
 });
 
 
-// router.get('/janek', function(req, res, next) {
-//   janek.save(function(err,janek) {
-//     if(err) return console.log(err);
-//     janek.speak();
-//   });
-//   res.send(JSON.stringify(janek));
-// });
-
 router.get('/', function(req, res, next) {
+  res.render('students',{});
+});
+
+//
+router.get('/janek', function(req, res, next) {
+  janek.save(function(err,janek) {
+    if(err) return console.log(err);
+    janek.speak();
+  });
+  res.send(JSON.stringify(janek));
+});
+
+router.get('/wyswietl', function(req, res, next) {
   StudentsModel.find(function(err, doc) {
     if(err) return console.error(err);
     res.json(doc);
   });
 });
 
-router.get('/:id', function(req, res, next) {
+router.get('/znajdz/:id', function(req, res, next) {
   StudentsModel.findById(req.params.id, function(err, doc) {
     if(err) return console.error(err);
+    res.json(doc.name);
+  });
+});
+// srednio dziala
+router.get('/cwiczenia', function(req, res, next) {
+  CwiczeniaModel.find(function(err, doc) {
+    if(err) return console.error(err);
+    console.log(doc);
     res.json(doc);
   });
 });
 
-router.post('/', function(req, res, next) {
-  StudentsModel.create(req.body , function(err, doc) {
+router.post('/stworz', function(req, res, next) {
+  StudentsModel.create(req.body.name , function(err, doc) {
     if(err) return console.error(err);
     res.json(doc);
   });
@@ -74,26 +102,24 @@ router.put('/:id', function(req, res, next) {
   });
 });
 
-router.delete('/:id', function(req, res, next) {
+router.delete('/usun/:id', function(req, res, next) {
   StudentsModel.findByIdAndRemove(req.params.id, function(err, doc) {
     if(err) return console.error(err);
     res.json(doc);
   });
 });
 
-
-
-// router.get('/:id', function(req, res, next) {
-//   var wiersz;
-//   for(var i=0; i<students.length; i++) {
-//     if(students[i].id == req.params.id) {
-//       wiersz = students[i];
-//       break;
-//     } else {
-//       wiersz = "Bledne id";
-//     }
-//   }
-//   res.send(wiersz);
-// });
+router.get('/wyswietlobiekt/:id', function(req, res, next) {
+  var wiersz;
+  for(var i=0; i<students.length; i++) {
+    if(students[i].id == req.params.id) {
+      wiersz = students[i];
+      break;
+    } else {
+      wiersz = "Bledne id";
+    }
+  }
+  res.send(wiersz);
+});
 
 module.exports = router;

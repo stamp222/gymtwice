@@ -1,0 +1,27 @@
+doctype html
+html
+  head
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css')
+  body(style={color: 'red', background: 'gray'})
+    div.container(style={color: 'red', background: 'green'})
+      h2 get put post delete, szukanie w bazie i usuwanie, tworzenie, updatowanie
+      hr
+      h2 metody na bazie
+        ul 
+          li create
+          li find
+          li findById
+          li findByIdAndUpdate
+          li findByIdAndRemove
+          li save
+    hr
+    div.container(style={color: 'red', background: 'blue'})
+      h2 dostepne sciezki:
+      h3 
+        ul
+          li /janek - zapisuje obiekt do bazy danych i wyswietla go w postaci json oraz wywołuje funkcje speak ze schematu
+          li /wyswietl - wyswietla wszystkich uzytkownikow z kolekcji
+          li /znajdz/:id - znajduje konkretnego uzytkownika (postman)
+          li /stworz - tworzy nowego uzytkownika (postman)
+          li /usun/:id - usuwa konkretnego uzytkownika (postman)
+          li /wyswietlobiekt/:id - wyswietla konktegnego studenta o danym ID z obiektu student utworzonego w w pliku js

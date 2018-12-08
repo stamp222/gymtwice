@@ -1,34 +1,64 @@
 var express = require('express');
+var passport = require('passport');
 var router = express.Router();
-var data = {
- imie: "Michał",
- nazwisko: "Nowak",
- data_ur: "1991-08-29",
- wyprawa: "Wyprawa na Świnicę",
- pocz: new Date("2016-08-29 06:45:00"),
- koniec: new Date("2016-08-29T20:35:18"),
- przyjaciele: [
- {imie: 'Jan', nazw: 'Kaczmarek', szczyt: false},
- {imie: 'Tomasz', nazw: 'Mazór', szczyt: true},
- {imie: 'Katarzyna', nazw: 'Zarówna', szczyt: true},
- {imie: 'Mariusz', nazw: 'Bartoszewicz', szczyt: true},
- {imie: 'Maria', nazw: 'Chwalba', szczyt: false}
- ],
- strony: [
- {nazwa: "Pierwsza strona", link: "strona2"},
- {nazwa: "Nasza wyprawa", link: "jsdata2"},
- {nazwa: "Świnica na Wiki", link: "https://pl.wikipedia.org/wiki/%C5%9Awinica"},
- {nazwa: "Trasa", link: "http://www.wiecznatulaczka.pl/swinica-przez-zawrat-2/"},
- ]
-};
+var db = require('../utils/db.js')
+var sha1 = require('sha1');
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('content', { data: data, title: 'Express' });
-
+  res.render('content', { title: 'Express' });
 });
-router.get('/hello', function(req, res, next) {
-  res.send('indexbb');
+
+// wyświetlanie formularza do logowania
+router.get('/login', function(req, res) {
+  res.render('login');
+});
+
+// logowanie użytkownika
+// poprawne logowanie - przekierowanie na stronę główną
+// brak uwierzytelnienia - przekierowanie na strone logowania
+router.post('/login',
+  passport.authenticate('local',
+    { session: true,
+      successRedirect: '/',
+      failureRedirect: '/login' }
+  )
+);
+
+// wylogowanie i przekierowanie na stronę główną
+router.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
+});
+
+
+// informacje o sesji użytkownika
+router.get('/sesja', function(req, res, next) {
+  if(req.session.odwiedziny) {
+    req.session.odwiedziny++;
+  } else {
+    req.session.odwiedziny = 1;
+  }
+  var dane = {
+    idSesji: req.session.id,
+    odwiedziny: req.session.odwiedziny,
+    ciasteczko: req.session.cookie,
+    data: req.session.cookie.data,
+    passport: req.session.passport
+  };
+  res.render('sesja', dane);
+});
+
+
+// inforamcja o kilku obiektach przechowujących dane zalogowanego użytkownika
+router.get('/zalogowany', function(req, res) {
+  var dane = {
+    user: req.user,
+    passport: req.session.passport,
+    log_info: res.locals.logInfo
+  };
+  res.render('zalogowany', dane);
 });
 
 module.exports = router;

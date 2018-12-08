@@ -1,20 +1,54 @@
 extends szablon
 
 prepend content
-  nav 
+  nav
     ul
       li 
-        a(href="/strona", target="_blank") strona
+        a(href="/strona" style="color:red; background:blue" class="sr-only-focusable" target="") pug cz1
+      br
       li 
-        a(href="http://www.google.pl", target="_blank") google
+        a(href="/jsdata" style="color:red; background:blue" target="") pug cz2
+      br
       li 
-        a(href="http://www.google.pl", target="_blank") google
+        a(href="/students" style="color:red; background:blue" target="") rooting, mongoose
+      br
+      li 
+        a(href="/users"  style="color:red; background:blue" target="") dodawanie, usuwanie z bazy z uzyciem sha1
+      br
+      li 
+        a(href="/labfourth" style="color:red; background:blue" target="") sesja
+      br
+      li 
+        a(href="/labfifth" style="color:red; background:blue" target="") token
+      br
+
   article
     h2 Dzialanie
     h1 Lorem ipsum
-    p Tekst lorem ipsum
-    p Lorem basdksadksakdas
-     | fasfsafasfasfsa
-     br
-     | fafsafasfsaf
+    p Strony dostępne 
+      strong dla wszystkich
+    a(href="/") Strona główna
+    br
+    a(href="/users/reset") users/reset
+    |  - resetowanie kolekcji użytowników, domyślnie ustawia dwóch użytkowników
+    br
+    a(href="/login") login
+    |  - formularz logowania użytkowników
+    br
+    a(href="/sesja") sesja
+    |  - info o sesji przeglądarki
+    br
+    p Strony dostępne 
+      strong tylko dla zalogowanych
+    a(href="/logout") logout
+    |  - wylogowanie użytkownika ze strony
+    br
+    a(href="/users") users
+    |  - dane o użytkownikach, format JSON dla metody GET dostępny dla zalogowanych, poczętek API
+    br
+    a(href="/zalogowany") zalogowany
+    |  - wszystkie istotne dane o zalogowanym użytkowniku: req.user, req.session.passport, res.locals.logInfo
+    hr
+    p= logInfo
+    button(type="button" class="btn btn-danger") Bootstraptest
     

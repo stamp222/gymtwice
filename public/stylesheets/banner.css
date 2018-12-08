@@ -19,7 +19,7 @@ header {
 nav {
     float: left;
     width: 30%;
-    height: 300px; /* only for demonstration, should be removed */
+    height: 500px; /* only for demonstration, should be removed */
     background: #ccc;
     padding: 20px;
 }
@@ -35,7 +35,7 @@ article {
     padding: 20px;
     width: 70%;
     background-color: #f1f1f1;
-    height: 300px; /* only for demonstration, should be removed */
+    height: 500px; /* only for demonstration, should be removed */
 }
 
 /* Clear floats after the columns */
@@ -51,6 +51,10 @@ footer {
     padding: 10px;
     text-align: center;
     color: white;
+}
+a {
+  border: 1px solid black;
+  padding: 2px;
 }
 
 /* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
