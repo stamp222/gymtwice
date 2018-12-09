@@ -47,7 +47,7 @@ app.use(function(req, res, next) {
   } else{
     res.locals.logInfo = `Niezalogowany`;
     // tu powinienem dodac reszte odnosnikow ktore nie wymagaja logowania
-    if(req.url==='/' || req.url==='/sesja' || req.url==='/login' || req.url==='/users/reset' ) {
+    if(req.url==='/' || req.url==='/sesja' || req.url==='/login' || req.url==='/users/reset'  || '/students') {
       next();
     } else {
       res.redirect("/login");

@@ -76,7 +76,8 @@ router.get('/wyswietl', function(req, res, next) {
 router.get('/znajdz/:id', function(req, res, next) {
   StudentsModel.findById(req.params.id, function(err, doc) {
     if(err) return console.error(err);
-    res.json(doc.name);
+    console.log(doc);
+    res.json(doc.imie);
   });
 });
 // srednio dziala
