@@ -28,13 +28,17 @@ router.get('/reset', function(req, res, next) {
   User.remove({}, function (err) {
     if (err) return handleError(err);
     var admin = new User({"username":"admin", "password":sha1("stud234"), "admin": true});
+    var admin2 = new User({"username":"jacek", "password":sha1("szyper"), "admin": true});
     var asdf = new User({"username":"asdf", "password":sha1("asdf") });
     // create two users: 'admin' and 'asdf'
     admin.save((err,data)=>{
       if (err) return console.error(err);
       asdf.save(function(err,data2) {
         if (err) return console.error(err);
-        res.send("<h3>Utworzeni użytkownicy:</h3>" + data + " <br> " + data2);
+        admin2.save(function(err,data3) {
+          if (err) return console.error(err);
+          res.send("<h3>Utworzeni użytkownicy:</h3>" + data + " <br> " + data2 + " <br>" + data3);
+        })
       })
     });
   });

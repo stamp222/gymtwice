@@ -57,6 +57,8 @@ router.get('/', function(req, res, next) {
   res.render('students',{});
 });
 
+
+
 //
 router.get('/janek', function(req, res, next) {
   janek.save(function(err,janek) {

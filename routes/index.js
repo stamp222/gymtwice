@@ -26,6 +26,10 @@ router.post('/login',
   )
 );
 
+router.get('/login2', function(req, res) {
+  res.render('login');
+});
+
 // wylogowanie i przekierowanie na stronę główną
 router.get('/logout', function(req, res){
   req.logout();
