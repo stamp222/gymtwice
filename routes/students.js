@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+var db = require('../utils/db.js')
 var mongoose = require('mongoose');
 var students = [
  {"id": 0, "imie":"Marek", "nazwisko":"Nowak", "wiek": 23},
@@ -8,28 +8,28 @@ var students = [
  {"id": 2, "imie":"Tadeusz", "nazwisko":"Mostowski", "wiek": 24},
  {"id": 3, "imie":"Inga", "nazwisko":"Baran", "wiek": 23}
 ];
-mongoose.connect('mongodb://stamp222:mongoku2@ds245680.mlab.com:45680/mongojac');
+// mongoose.connect('mongodb://stamp222:mongoku2@ds245680.mlab.com:45680/mongojac');
 /* GET home page. */
-var db = mongoose.connection;
+// var db = mongoose.connection;
 var studentSchema = mongoose.Schema({
   imie: String,
   nazw: String,
   wiek: {type: Number, min: 1, max: 120, default: 25}
 });
 
-var cwiczeniaSchema = mongoose.Schema({
-      name : String,
-      miesnie : [
-          String
-      ],
-      info : {
-          opis : String,
-          link : String
-      },
-      popularnosc : Number,
-      trudnosc : Number,
-      max : Number
-});
+// var cwiczeniaSchema = mongoose.Schema({
+//       name : String,
+//       miesnie : [
+//           String
+//       ],
+//       info : {
+//           opis : String,
+//           link : String
+//       },
+//       popularnosc : Number,
+//       trudnosc : Number,
+//       max : Number
+// });
 
 studentSchema.methods.speak = function() {
   var greeting = this.imie
@@ -38,7 +38,7 @@ studentSchema.methods.speak = function() {
     console.log(greeting);
 }
 var StudentsModel = mongoose.model('students',studentSchema);
-var CwiczeniaModel = mongoose.model('cwiczenia',cwiczeniaSchema);
+// var CwiczeniaModel = mongoose.model('cwiczenia',cwiczeniaSchema);
 
 var janek = new StudentsModel({
   imie: "Zygfryd",
@@ -54,6 +54,8 @@ db.once('open',function() {
 
 
 router.get('/', function(req, res, next) {
+  // console.log("asdfasdfasdfasdfasdfasdf");
+  // res.send("asdfasdfasdfasdfasd");
   res.render('students',{});
 });
 
@@ -82,14 +84,14 @@ router.get('/znajdz/:id', function(req, res, next) {
     res.json(doc.imie);
   });
 });
-// srednio dziala
-router.get('/cwiczenia', function(req, res, next) {
-  CwiczeniaModel.find(function(err, doc) {
-    if(err) return console.error(err);
-    console.log(doc);
-    res.json(doc);
-  });
-});
+// // srednio dziala
+// router.get('/cwiczenia', function(req, res, next) {
+//   CwiczeniaModel.find(function(err, doc) {
+//     if(err) return console.error(err);
+//     console.log(doc);
+//     res.json(doc);
+//   });
+// });
 
 router.post('/stworz', function(req, res, next) {
   StudentsModel.create(req.body.name , function(err, doc) {

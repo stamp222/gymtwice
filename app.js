@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressJWT = require('express-jwt');
 var jsonwebtoken = require('jsonwebtoken');
-var db = require('./utils/db.js');
+var User = require('./utils/db.js');
 var mongoose = require('mongoose');
 var sha1 = require('sha1');
 
@@ -68,6 +68,7 @@ app.use(function(req, res, next) {
 
 app.use(expressJWT({ secret: "secret" }).
 unless({ path: ['/labfourth', '/index', '/users', '/strona', '/jsdata', '/labfifth', '/', '/users/wyswietl', '/login', '/logout', '/zalogowany', '/login2'] }))
+// unless({ path: ['/labfourth', '/students', '/index', '/users', '/strona', '/jsdata', '/labfifth', '/', '/users/wyswietl', '/login', '/logout', '/zalogowany', '/login2'] }))
 app.use('/', index);
 app.use('/users', users);
 app.use('/students', students);
@@ -97,11 +98,14 @@ app.post('/login2', function(req,res){
     res.status(400).send('potrzeba jeszcze hasła');
     return;
   }
-  User.findOne({username: req.body.username}, function(err, logger){
-  if(User.password==req.body.password) {
+  console.log(req.body.username);
+  console.log(req.body.password);
+  User.findOne({username: req.body.username}, function(err, data){
+  // if(User.password==req.body.password) {
+  if(data.password==sha1(req.body.password)) {
 
     var token = jsonwebtoken.sign({ username: req.body.username }, 'secret');
-    console.log(json(token));
+    console.log(token);
     res.status(200).json(token);
   } else {
     console.log("Wszystko nie tak jak ma byc, jak zyc");

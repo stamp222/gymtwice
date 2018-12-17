@@ -1,3 +1,7 @@
+
+.mix {border-style: none none none solid; border-color: blue;}
+#lorem { margin: 6px; padding: 6px; border: 2px green solid; }
+
 * {
     box-sizing: border-box;
 }
