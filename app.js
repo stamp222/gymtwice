@@ -67,7 +67,7 @@ app.use(function(req, res, next) {
 });
 
 app.use(expressJWT({ secret: "secret" }).
-unless({ path: ['/labfourth', '/index', '/users', '/strona', '/jsdata', '/labfifth', '/', '/users/wyswietl', '/login', '/logout', '/zalogowany', '/login2'] }))
+unless({ path: ['/labfourth', '/index', '/users', '/strona', '/jsdata', '/labfifth', '/', '/users/wyswietl', '/login', '/logout', '/zalogowany', '/login2', '/users/reset', '/sesja'] }))
 // unless({ path: ['/labfourth', '/students', '/index', '/users', '/strona', '/jsdata', '/labfifth', '/', '/users/wyswietl', '/login', '/logout', '/zalogowany', '/login2'] }))
 app.use('/', index);
 app.use('/users', users);

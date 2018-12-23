@@ -1,7 +1,10 @@
-h1 session id: #{data.id}
-h2 liczba odwiedzin: #{data.liczba}
-h3 infomacje o polach cookie
-ul
-  - for(x in data.cookie)
-     li #{data.cookie[x]}
+extends szablon
+block content
+  article  
+    h1 session id: #{data.id}
+    h2 liczba odwiedzin: #{data.liczba}
+    h3 infomacje o polach cookie
+    ul
+      - for(x in data.cookie)
+         li #{data.cookie[x]}
     

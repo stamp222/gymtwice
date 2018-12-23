@@ -1,9 +1,6 @@
-doctype html
-html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/jsdata.css')
-  body
+extends szablon
+block content
+  article
     h1 Wyprawa na Świnicę dnia #{data.pocz.getFullYear()}-#{data.pocz.getMonth()+1}-#{data.pocz.getDate()}
     p Pomysłodawcą wycieczki: #{data.imie} #{data.nazwisko}, urodzony #{data.data_ur}
     p Lista uczestników 
